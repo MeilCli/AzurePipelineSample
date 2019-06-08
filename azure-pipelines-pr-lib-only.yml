@@ -72,11 +72,11 @@ stages:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         configuration: '$(buildConfiguration)'
-        arguments: '--logger trx -r TestResults'
+        arguments: '--logger trx'
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: 'testLib'
-        targetPath: 'TestResults'
+        targetPath: '$(Agent.TempDirectory)'
 
 
 - stage: Publish
