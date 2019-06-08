@@ -93,6 +93,10 @@ stages:
     steps:
     - task: DownloadPipelineArtifact@0
       inputs:
+        artifactName: 'libBinary'
+        targetPath: '$(libBinaryDirectory)'
+    - task: DownloadPipelineArtifact@0
+      inputs:
         artifactName: 'coreBinary'
         targetPath: '$(coreBinaryDirectory)'
     - script: 'dotnet publish $(coreTestProject)/$(coreTestProject).csproj -c $(buildConfiguration)'
@@ -129,6 +133,14 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: DownloadPipelineArtifact@0
+      inputs:
+        artifactName: 'libBinary'
+        targetPath: '$(libBinaryDirectory)'
+    - task: DownloadPipelineArtifact@0
+      inputs:
+        artifactName: 'coreBinary'
+        targetPath: '$(coreBinaryDirectory)'
     - task: DownloadPipelineArtifact@0
       inputs:
         artifactName: 'consoleBinary'
