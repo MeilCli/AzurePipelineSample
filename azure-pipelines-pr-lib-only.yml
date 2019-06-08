@@ -85,7 +85,7 @@ stages:
       inputs:
         artifactName: 'libTestBinary'
         targetPath: '$(libTestBinaryDirectory)'
-    - script: 'dotnet vstest $(System.DefaultWorkingDirectory)/$(libBinaryDirectory)/publish/AzurePipelineSample.NETStandard.Lib.Test.dll /logger:trx /ResultsDirectory:$(System.DefaultWorkingDirectory)/Results'
+    - script: 'dotnet vstest $(System.DefaultWorkingDirectory)/$(libTestBinaryDirectory)/publish/AzurePipelineSample.NETStandard.Lib.Test.dll /logger:trx /ResultsDirectory:$(System.DefaultWorkingDirectory)/Results'
       displayName: Run Test
     - task: PublishTestResults@2
       inputs:
