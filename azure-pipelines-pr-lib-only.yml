@@ -88,7 +88,7 @@ stages:
   - job: Test_Lib
     displayName: Lib
     pool:
-      vmImage: 'windows-2019'
+      vmImage: 'ubuntu-latest'
     steps:
     - task: DownloadPipelineArtifact@0 # Build_Lib_Testで生成したバイナリーを配置する
       inputs:
@@ -98,6 +98,11 @@ stages:
       inputs:
         artifactName: 'libTestObject'
         targetPath: '$(libTestObjectDirectory)'
+    - task: DotNetCoreInstaller@1 # .NET Coreのバージョンが低いとなぜかスキップされてしまうのでバージョンup
+      displayName: '.NET Core Sdk Version Select'
+      inputs:
+        packageType: sdk
+        version: 2.x
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
