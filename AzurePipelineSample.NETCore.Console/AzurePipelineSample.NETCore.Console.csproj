@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AzurePipelineSample.NETStandard.Core\AzurePipelineSample.NETStandard.Core.csproj" />
+  </ItemGroup>
+
+</Project>
