@@ -72,7 +72,11 @@ stages:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         configuration: '$(buildConfiguration)'
-        arguments: '--logger trx'
+        arguments: '--logger trx -r TestResults'
+    - task: PublishPipelineArtifact@0
+      inputs:
+        artifactName: 'testLib'
+        targetPath: 'TestResults'
 
 
 - stage: Publish
@@ -83,6 +87,10 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: DownloadPipelineArtifact@0
+      inputs:
+        artifactName: 'testLib'
+        targetPath: $(System.DefaultWorkingDirectory)
     - task: PublishTestResults@2
       inputs:
         testRunner: VSTest
