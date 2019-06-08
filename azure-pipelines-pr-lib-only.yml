@@ -2,7 +2,7 @@
   branches:
     include:
     - master # PRのターゲットブランチを指定
-  paths
+  paths:
     include:
     - AzurePipelineSample.NETStandard.Lib/*
     - AzurePipelineSample.NETStandard.Lib.Test/*
