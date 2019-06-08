@@ -94,7 +94,6 @@ stages:
       inputs:
         packageType: sdk
         version: 2.x
-        installationPath: $(Agent.ToolsDirectory)/dotnet
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
