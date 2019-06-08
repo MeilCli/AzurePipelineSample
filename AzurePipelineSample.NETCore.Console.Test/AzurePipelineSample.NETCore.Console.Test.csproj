@@ -28,5 +28,13 @@
                Condition="'$(Configuration)'=='CI_Release'">
       <HintPath>..\AzurePipelineSample.NETCore.Console\bin\CI_Release\netcoreapp2.1\AzurePipelineSample.NETCore.Console.dll</HintPath>
     </Reference>
+    <Reference Include="AzurePipelineSample.NETStandard.Core"
+               Condition="'$(Configuration)'=='CI_Release'">
+      <HintPath>..\AzurePipelineSample.NETStandard.Core\bin\CI_Release\netstandard2.0\AzurePipelineSample.NETStandard.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AzurePipelineSample.NETStandard.Lib"
+           Condition="'$(Configuration)'=='CI_Release'">
+      <HintPath>..\AzurePipelineSample.NETStandard.Lib\bin\CI_Release\netstandard2.0\AzurePipelineSample.NETStandard.Lib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
