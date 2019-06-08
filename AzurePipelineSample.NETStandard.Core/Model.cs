@@ -4,6 +4,7 @@ namespace AzurePipelineSample.NETStandard.Core
 {
     public class Model : IModel
     {
+        // comment 1
         private readonly ILibrary library;
 
         public string Name { get; }
