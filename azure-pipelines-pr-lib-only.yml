@@ -1,4 +1,6 @@
-﻿pr:
+﻿trigger: none
+
+pr:
   branches:
     include:
     - master # PRのターゲットブランチを指定
@@ -63,7 +65,7 @@ stages:
         configuration: '$(buildConfiguration)'
         arguments: '--logger trx'
 - stage: Publish
-  dependsOn Test
+  dependsOn: Test
   jobs:
   - job: Publish_Test
     displayName: Publish Test
