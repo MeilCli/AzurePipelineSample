@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzurePipelineSample.NETStan
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA509878-0531-4E1A-B0C3-F434C8E93177}"
 	ProjectSection(SolutionItems) = preProject
+		azure-pipelines-pr-lib-only.yml = azure-pipelines-pr-lib-only.yml
+		azure-pipelines.yml = azure-pipelines.yml
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection

@@ -1,0 +1,74 @@
+﻿pr:
+  branches:
+    include:
+    - master # PRのターゲットブランチを指定
+  paths
+    include:
+    - AzurePipelineSample.NETStandard.Lib/*
+    - AzurePipelineSample.NETStandard.Lib.Test/*
+    exclude:
+    - AzurePipelineSample.NETStandard.Lib.Core/*
+    - AzurePipelineSample.NETStandard.Lib.Test/*
+    - AzurePipelineSample.NETCore.Console/*
+    - AzurePipelineSample.NETCore.Console.Test/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build_Lib
+    displayName: Build Lib
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'build $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        projects: 'AzurePipelineSample.NETStandard.Lib/*.csproj'
+        configuration: '$(buildConfiguration)'
+  - job: Build_Lib_Test
+    displayName: Build Lib Test
+    dependsOn: Build_Lib
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'build $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
+        configuration: '$(buildConfiguration)'
+  - job: Build_Core
+    displayName: Build Core
+    dependsOn: Build_Lib
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'build $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        projects: 'AzurePipelineSample.NETStandard.Core/*.csproj'
+        configuration: '$(buildConfiguration)'
+- stage: Test
+  dependsOn: Build
+  jobs:
+  - job: Test_Lib
+    displayName: Test Lib
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
+        configuration: '$(buildConfiguration)'
+        arguments: '--logger trx'
+- stage: Publish
+  dependsOn Test
+  jobs:
+  - job: Publish_Test
+    displayName: Publish Test
+    steps:
+    - task: PublishTestResults@2
+      inputs:
+        testRunner: VSTest
+        testResultsFiles: '**/*.trx'
