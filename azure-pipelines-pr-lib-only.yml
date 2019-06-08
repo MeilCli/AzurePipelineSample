@@ -23,7 +23,7 @@ stages:
 - stage: Build
   jobs:
   - job: Build_Lib
-    displayName: Build Lib
+    displayName: Lib
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -39,7 +39,7 @@ stages:
         targetPath: '$(libBinaryDirectory)'
 
   - job: Build_Lib_Test
-    displayName: Build Lib Test
+    displayName: Lib Test
     dependsOn: Build_Lib
     pool:
       vmImage: 'ubuntu-latest'
@@ -60,7 +60,7 @@ stages:
         targetPath: '$(libTestBinaryDirectory)'
 
   - job: Build_Core
-    displayName: Build Core
+    displayName: Core
     dependsOn: Build_Lib
     pool:
       vmImage: 'ubuntu-latest'
@@ -81,7 +81,7 @@ stages:
   dependsOn: Build
   jobs:
   - job: Test_Lib
-    displayName: Test Lib
+    displayName: Lib
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -93,4 +93,4 @@ stages:
       inputs:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
-        arguments: '--logger trx -c $(buildConfiguration) --no-build -o $(libTestBinaryDirectory)'
+        arguments: '--logger trx -c $(buildConfiguration) --no-build'
