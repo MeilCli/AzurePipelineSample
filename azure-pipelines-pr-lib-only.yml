@@ -18,7 +18,6 @@ variables:
   buildConfiguration: 'CI_Release'
   libBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib/bin/$(buildConfiguration)/netstandard2.0'
   libTestBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/bin/$(buildConfiguration)/netcoreapp2.1'
-  libTestObjectDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/obj'
 
 stages:
 - stage: Build
@@ -49,25 +48,16 @@ stages:
       inputs:
         artifactName: 'libBinary'
         targetPath: '$(libBinaryDirectory)'
-    - task: DotNetCoreInstaller@1 # Testと同じバージョンの.NET Coreを使わないとバイナリーを使いまわせないのでバージョンを合わせる
-      displayName: '.NET Core Sdk Version Select'
-      inputs:
-        packageType: sdk
-        version: 2.x
     - task: DotNetCoreCLI@2
       displayName: 'build $(buildConfiguration)'
       inputs:
-        command: 'build'
+        command: 'publish'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         arguments: '-c $(buildConfiguration)'
     - task: PublishPipelineArtifact@0 # 生成したバイナリーをJob/Stage間で再利用する
       inputs:
         artifactName: 'libTestBinary'
         targetPath: '$(libTestBinaryDirectory)'
-    - task: PublishPipelineArtifact@0 # 生成したバイナリーをJob/Stage間で再利用する
-      inputs:
-        artifactName: 'libTestObject'
-        targetPath: '$(libTestObjectDirectory)'
 
   - job: Build_Core
     displayName: Core
@@ -99,17 +89,9 @@ stages:
       inputs:
         artifactName: 'libTestBinary'
         targetPath: '$(libTestBinaryDirectory)'
-    - task: DownloadPipelineArtifact@0 # Build_Lib_Testで生成したオブジェクトを配置する
+    - script: 'dotnet vstest $(System.DefaultWorkingDirectory)/$(libBinaryDirectory)/publish/AzurePipelineSample.NETStandard.Lib.Test.dll /logger:trx /ResultsDirectory:$(System.DefaultWorkingDirectory)/Results'
+      displayName: Run Test
+    - task: PublishTestResults@2
       inputs:
-        artifactName: 'libTestObject'
-        targetPath: '$(libTestObjectDirectory)'
-    - task: DotNetCoreInstaller@1 # .NET Coreのバージョンが低いとなぜかスキップされてしまうのでバージョンup
-      displayName: '.NET Core Sdk Version Select'
-      inputs:
-        packageType: sdk
-        version: 2.x
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'test'
-        projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
-        arguments: '-c $(buildConfiguration) -v n --no-build'
+        testRunner: VSTest
+        testResultsFiles: '**/*.trx'
