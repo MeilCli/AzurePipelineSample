@@ -89,8 +89,14 @@ stages:
       inputs:
         artifactName: 'libTestBinary'
         targetPath: '$(libTestBinaryDirectory)'
+    - task: UseDotNet@2 # .NET Core 2.2.300未満だとcsprojにIsTestProject propertyがないとスキップされてしまうのでバージョンをあげておく
+      displayName: '.NET Core Sdk Version Select'
+      inputs:
+        packageType: sdk
+        version: 2.x
+        installationPath: $(Agent.ToolsDirectory)/dotnet
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
-        arguments: '--logger trx -c $(buildConfiguration) --no-build'
+        arguments: '--logger trx -c $(buildConfiguration) --no-build -o $(libTestBinaryDirectory)'
