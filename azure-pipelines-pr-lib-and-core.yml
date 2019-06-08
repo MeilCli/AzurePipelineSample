@@ -5,12 +5,17 @@ pr:
     include:
     - master
   paths:
-    include:
-    - AzurePipelineSample.NETStandard.Core/*
-    - AzurePipelineSample.NETStandard.Core.Test/*
+    # including Core or Lib
     exclude:
     - AzurePipelineSample.NETCore.Console/*
     - AzurePipelineSample.NETCore.Console.Test/*
+    - .gitattributes
+    - .gitignore
+    - LICENSE.txt
+    - README.md
+    - azure-pipelines.yml
+    - azure-pipelines-pr-all.yml
+    - azure-pipelines-pr-lib-only.yml
 
 variables:
   buildConfiguration: 'CI_Release'
