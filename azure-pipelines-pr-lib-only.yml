@@ -111,4 +111,9 @@ stages:
       inputs:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
+        arguments: '-c $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         arguments: '-c $(buildConfiguration) --no-build -v n'
