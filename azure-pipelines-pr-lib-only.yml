@@ -6,6 +6,8 @@ pr:
     - master
   paths:
     # including Lib only
+    include:
+    - '*'
     exclude:
     - AzurePipelineSample.NETStandard.Core/*
     - AzurePipelineSample.NETStandard.Core.Test/*
