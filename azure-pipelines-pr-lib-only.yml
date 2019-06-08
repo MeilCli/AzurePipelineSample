@@ -6,16 +6,13 @@ pr:
     - master # PRのターゲットブランチを指定
   paths:
     include:
-    - 'AzurePipelineSample.NETStandard.Lib/*'
-    - 'AzurePipelineSample.NETStandard.Lib.Test/*'
+    - AzurePipelineSample.NETStandard.Lib/*
+    - AzurePipelineSample.NETStandard.Lib.Test/*
     exclude:
-    - 'AzurePipelineSample.NETStandard.Lib.Core/*'
-    - 'AzurePipelineSample.NETStandard.Lib.Test/*'
-    - 'AzurePipelineSample.NETCore.Console/*'
-    - 'AzurePipelineSample.NETCore.Console.Test/*'
-
-pool:
-  vmImage: 'ubuntu-latest'
+    - AzurePipelineSample.NETStandard.Lib.Core/*
+    - AzurePipelineSample.NETStandard.Lib.Test/*
+    - AzurePipelineSample.NETCore.Console/*
+    - AzurePipelineSample.NETCore.Console.Test/*
 
 variables:
   buildConfiguration: 'Release'
@@ -25,6 +22,8 @@ stages:
   jobs:
   - job: Build_Lib
     displayName: Build Lib
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'build $(buildConfiguration)'
@@ -32,9 +31,12 @@ stages:
         command: 'build'
         projects: 'AzurePipelineSample.NETStandard.Lib/*.csproj'
         configuration: '$(buildConfiguration)'
+
   - job: Build_Lib_Test
     displayName: Build Lib Test
     dependsOn: Build_Lib
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'build $(buildConfiguration)'
@@ -42,9 +44,12 @@ stages:
         command: 'build'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         configuration: '$(buildConfiguration)'
+
   - job: Build_Core
     displayName: Build Core
     dependsOn: Build_Lib
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'build $(buildConfiguration)'
@@ -52,11 +57,15 @@ stages:
         command: 'build'
         projects: 'AzurePipelineSample.NETStandard.Core/*.csproj'
         configuration: '$(buildConfiguration)'
+
+
 - stage: Test
   dependsOn: Build
   jobs:
   - job: Test_Lib
     displayName: Test Lib
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - task: DotNetCoreCLI@2
       inputs:
@@ -64,11 +73,15 @@ stages:
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         configuration: '$(buildConfiguration)'
         arguments: '--logger trx'
+
+
 - stage: Publish
   dependsOn: Test
   jobs:
   - job: Publish_Test
     displayName: Publish Test
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
     - task: PublishTestResults@2
       inputs:
