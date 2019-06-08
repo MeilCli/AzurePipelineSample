@@ -6,13 +6,13 @@ pr:
     - master # PRのターゲットブランチを指定
   paths:
     include:
-    - AzurePipelineSample.NETStandard.Lib/*
-    - AzurePipelineSample.NETStandard.Lib.Test/*
+    - 'AzurePipelineSample.NETStandard.Lib/*'
+    - 'AzurePipelineSample.NETStandard.Lib.Test/*'
     exclude:
-    - AzurePipelineSample.NETStandard.Lib.Core/*
-    - AzurePipelineSample.NETStandard.Lib.Test/*
-    - AzurePipelineSample.NETCore.Console/*
-    - AzurePipelineSample.NETCore.Console.Test/*
+    - 'AzurePipelineSample.NETStandard.Lib.Core/*'
+    - 'AzurePipelineSample.NETStandard.Lib.Test/*'
+    - 'AzurePipelineSample.NETCore.Console/*'
+    - 'AzurePipelineSample.NETCore.Console.Test/*'
 
 pool:
   vmImage: 'ubuntu-latest'
