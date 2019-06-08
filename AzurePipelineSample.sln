@@ -3,20 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzurePipelineSample.NETStandard.Core", "AzurePipelineSample.NETStandard.Core\AzurePipelineSample.NETStandard.Core.csproj", "{3E6C9975-304B-479B-BED6-415AD3DB4E12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzurePipelineSample.NETStandard.Core", "AzurePipelineSample.NETStandard.Core\AzurePipelineSample.NETStandard.Core.csproj", "{3E6C9975-304B-479B-BED6-415AD3DB4E12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzurePipelineSample.NETStandard.Lib", "AzurePipelineSample.NETStandard.Lib\AzurePipelineSample.NETStandard.Lib.csproj", "{B6D7E33C-A382-4B3C-9B9C-128152ECB525}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzurePipelineSample.NETStandard.Lib", "AzurePipelineSample.NETStandard.Lib\AzurePipelineSample.NETStandard.Lib.csproj", "{B6D7E33C-A382-4B3C-9B9C-128152ECB525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzurePipelineSample.NETCore.Console", "AzurePipelineSample.NETCore.Console\AzurePipelineSample.NETCore.Console.csproj", "{6C3B299B-5BAC-47CE-947D-370301FB35AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzurePipelineSample.NETCore.Console", "AzurePipelineSample.NETCore.Console\AzurePipelineSample.NETCore.Console.csproj", "{6C3B299B-5BAC-47CE-947D-370301FB35AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzurePipelineSample.NETCore.Console.Test", "AzurePipelineSample.NETCore.Console.Test\AzurePipelineSample.NETCore.Console.Test.csproj", "{23FB8D11-DEC8-4326-9712-9B9EF8EFA29D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzurePipelineSample.NETCore.Console.Test", "AzurePipelineSample.NETCore.Console.Test\AzurePipelineSample.NETCore.Console.Test.csproj", "{23FB8D11-DEC8-4326-9712-9B9EF8EFA29D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzurePipelineSample.NETStandard.Core.Test", "AzurePipelineSample.NETStandard.Core.Test\AzurePipelineSample.NETStandard.Core.Test.csproj", "{38EB58EB-5970-4535-8788-91FD9CCB58E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzurePipelineSample.NETStandard.Core.Test", "AzurePipelineSample.NETStandard.Core.Test\AzurePipelineSample.NETStandard.Core.Test.csproj", "{38EB58EB-5970-4535-8788-91FD9CCB58E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzurePipelineSample.NETStandard.Lib.Test", "AzurePipelineSample.NETStandard.Lib.Test\AzurePipelineSample.NETStandard.Lib.Test.csproj", "{C68C8F17-E6C6-4768-B187-2494F0569802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzurePipelineSample.NETStandard.Lib.Test", "AzurePipelineSample.NETStandard.Lib.Test\AzurePipelineSample.NETStandard.Lib.Test.csproj", "{C68C8F17-E6C6-4768-B187-2494F0569802}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA509878-0531-4E1A-B0C3-F434C8E93177}"
 	ProjectSection(SolutionItems) = preProject
+		azure-pipelines-pr-all.yml = azure-pipelines-pr-all.yml
 		azure-pipelines-pr-lib-only.yml = azure-pipelines-pr-lib-only.yml
 		azure-pipelines.yml = azure-pipelines.yml
 		LICENSE.txt = LICENSE.txt
