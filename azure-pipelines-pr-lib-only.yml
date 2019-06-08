@@ -98,4 +98,4 @@ stages:
       inputs:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
-        arguments: '--logger trx -c $(buildConfiguration) --no-build -o $(libTestBinaryDirectory)'
+        arguments: '--logger trx -c $(buildConfiguration) --no-build'
