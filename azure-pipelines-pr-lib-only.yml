@@ -5,14 +5,14 @@ pr:
     include:
     - master
   paths:
-    include:
-    - AzurePipelineSample.NETStandard.Lib/*
-    - AzurePipelineSample.NETStandard.Lib.Test/*
     exclude:
     - AzurePipelineSample.NETStandard.Core/*
     - AzurePipelineSample.NETStandard.Core.Test/*
     - AzurePipelineSample.NETCore.Console/*
     - AzurePipelineSample.NETCore.Console.Test/*
+    include:
+    - AzurePipelineSample.NETStandard.Lib/*
+    - AzurePipelineSample.NETStandard.Lib.Test/*
 
 variables:
   buildConfiguration: 'CI_Release'
