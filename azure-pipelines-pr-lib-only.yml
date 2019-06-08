@@ -89,11 +89,11 @@ stages:
       inputs:
         artifactName: 'libTestBinary'
         targetPath: '$(libTestBinaryDirectory)'
-    - task: DotNetCoreInstaller@1 # .NET Core 2.2.300未満だとcsprojにIsTestProject propertyがないとスキップされてしまうのでバージョンをあげておく
+    - task: DotNetCoreInstaller@1 # .NET Coreのバージョンが低いとなぜかスキップされてしまうのでバージョンup
       displayName: '.NET Core Sdk Version Select'
       inputs:
         packageType: sdk
-        version: 2.x
+        version: 3.0.100-preview5-011568
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
