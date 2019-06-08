@@ -19,7 +19,6 @@ variables:
   libBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib/bin/$(buildConfiguration)/netstandard2.0'
   libTestBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/bin/$(buildConfiguration)/netcoreapp2.1'
   libTestObjectDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/obj'
-  libTestObjectDirectory2: 'AzurePipelineSample.NETStandard.Lib.Test/obj/$(buildConfiguration)/netcoreapp2.1'
 
 stages:
 - stage: Build
@@ -64,10 +63,6 @@ stages:
       inputs:
         artifactName: 'libTestObject'
         targetPath: '$(libTestObjectDirectory)'
-    - task: PublishPipelineArtifact@0 # 生成したバイナリーをJob/Stage間で再利用する
-      inputs:
-        artifactName: 'libTestObject2'
-        targetPath: '$(libTestObjectDirectory2)'
 
   - job: Build_Core
     displayName: Core
@@ -95,10 +90,6 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-    - task: DownloadPipelineArtifact@0 # Build_Libで生成したバイナリーを配置する
-      inputs:
-        artifactName: 'libBinary'
-        targetPath: '$(libBinaryDirectory)'
     - task: DownloadPipelineArtifact@0 # Build_Lib_Testで生成したバイナリーを配置する
       inputs:
         artifactName: 'libTestBinary'
@@ -107,17 +98,13 @@ stages:
       inputs:
         artifactName: 'libTestObject'
         targetPath: '$(libTestObjectDirectory)'
-    - task: DownloadPipelineArtifact@0 # Build_Lib_Testで生成したオブジェクトを配置する
-      inputs:
-        artifactName: 'libTestObject2'
-        targetPath: '$(libTestObjectDirectory2)'
     - task: DotNetCoreInstaller@1 # .NET Coreのバージョンが低いとなぜかスキップされてしまうのでバージョンup
       displayName: '.NET Core Sdk Version Select'
       inputs:
         packageType: sdk
         version: 2.x
-    - task: DotNetCoreCLI@2
+    - task: DotNetCoreCLI@2 # ToDo: --no-buildオプションが効かない
       inputs:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
-        arguments: '-c $(buildConfiguration) --no-build -v n'
+        arguments: '-c $(buildConfiguration) -v n'
