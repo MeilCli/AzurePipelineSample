@@ -18,6 +18,7 @@ variables:
   buildConfiguration: 'CI_Release'
   libBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib/bin/$(buildConfiguration)/netstandard2.0'
   libTestBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/bin/$(buildConfiguration)/netcoreapp2.1'
+  libTestObjectDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/obj/$(buildConfiguration)/netcoreapp2.1'
 
 stages:
 - stage: Build
@@ -58,6 +59,10 @@ stages:
       inputs:
         artifactName: 'libTestBinary'
         targetPath: '$(libTestBinaryDirectory)'
+    - task: PublishPipelineArtifact@0 # 生成したバイナリーをJob/Stage間で再利用する
+      inputs:
+        artifactName: 'libTestObject'
+        targetPath: '$(libTestObjectDirectory)'
 
   - job: Build_Core
     displayName: Core
@@ -89,11 +94,10 @@ stages:
       inputs:
         artifactName: 'libTestBinary'
         targetPath: '$(libTestBinaryDirectory)'
-    - task: DotNetCoreInstaller@1 # .NET Coreのバージョンが低いとなぜかスキップされてしまうのでバージョンup
-      displayName: '.NET Core Sdk Version Select'
+    - task: DownloadPipelineArtifact@0 # Build_Lib_Testで生成したオブジェクトを配置する
       inputs:
-        packageType: sdk
-        version: 3.0.100-preview5-011568
+        artifactName: 'libTestObject'
+        targetPath: '$(libTestObjectDirectory)'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
