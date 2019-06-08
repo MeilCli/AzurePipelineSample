@@ -90,6 +90,10 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: DownloadPipelineArtifact@0 # Build_Libで生成したバイナリーを配置する
+      inputs:
+        artifactName: 'libBinary'
+        targetPath: '$(libBinaryDirectory)'
     - task: DownloadPipelineArtifact@0 # Build_Lib_Testで生成したバイナリーを配置する
       inputs:
         artifactName: 'libTestBinary'
