@@ -17,6 +17,8 @@ pr:
 variables:
   buildConfiguration: 'CI_Release'
   libBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib/bin/$(buildConfiguration)/netstandard2.0'
+  libTestBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/bin/$(buildConfiguration)/netcoreapp2.1'
+  libTestObjectDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/obj'
 
 stages:
 - stage: Build
