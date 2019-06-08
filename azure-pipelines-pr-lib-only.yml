@@ -15,7 +15,9 @@ pr:
     - AzurePipelineSample.NETCore.Console.Test/*
 
 variables:
-  buildConfiguration: 'Release'
+  buildConfiguration: 'CI_Release'
+  libBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib/bin/$(buildConfiguration)/netstandard2.0'
+  libTestBinaryDirectory: 'AzurePipelineSample.NETStandard.Lib.Test/bin/$(buildConfiguration)/netcoreapp2.1'
 
 stages:
 - stage: Build
@@ -31,6 +33,10 @@ stages:
         command: 'build'
         projects: 'AzurePipelineSample.NETStandard.Lib/*.csproj'
         configuration: '$(buildConfiguration)'
+    - task: PublishPipelineArtifact@0 # 生成したバイナリーをJob/Stage間で再利用する
+      inputs:
+        artifactName: 'libBinary'
+        targetPath: '$(libBinaryDirectory)'
 
   - job: Build_Lib_Test
     displayName: Build Lib Test
@@ -38,12 +44,20 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: DownloadPipelineArtifact@0 # Build_Libで生成したバイナリーを配置する
+      inputs:
+        artifactName: 'libBinary'
+        targetPath: '$(libBinaryDirectory)'
     - task: DotNetCoreCLI@2
       displayName: 'build $(buildConfiguration)'
       inputs:
         command: 'build'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         configuration: '$(buildConfiguration)'
+    - task: PublishPipelineArtifact@0 # 生成したバイナリーをJob/Stage間で再利用する
+      inputs:
+        artifactName: 'libTestBinary'
+        targetPath: '$(libTestBinaryDirectory)'
 
   - job: Build_Core
     displayName: Build Core
@@ -51,6 +65,10 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: DownloadPipelineArtifact@0 # Build_Libで生成したバイナリーを配置する
+      inputs:
+        artifactName: 'libBinary'
+        targetPath: '$(libBinaryDirectory)'
     - task: DotNetCoreCLI@2
       displayName: 'build $(buildConfiguration)'
       inputs:
@@ -67,31 +85,13 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
+    - task: DownloadPipelineArtifact@0 # Build_Lib_Testで生成したバイナリーを配置する
+      inputs:
+        artifactName: 'libTestBinary'
+        targetPath: '$(libTestBinaryDirectory)'
     - task: DotNetCoreCLI@2
       inputs:
         command: 'test'
         projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
         configuration: '$(buildConfiguration)'
         arguments: '--logger trx'
-    - task: PublishPipelineArtifact@0
-      inputs:
-        artifactName: 'testLib'
-        targetPath: '$(Agent.TempDirectory)'
-
-
-- stage: Publish
-  dependsOn: Test
-  jobs:
-  - job: Publish_Test
-    displayName: Publish Test
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: DownloadPipelineArtifact@0
-      inputs:
-        artifactName: 'testLib'
-        targetPath: $(System.DefaultWorkingDirectory)
-    - task: PublishTestResults@2
-      inputs:
-        testRunner: VSTest
-        testResultsFiles: '**/*.trx'

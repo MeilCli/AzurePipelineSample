@@ -1,12 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Configurations>Debug;Release;CI_Release</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CI_Release|AnyCPU'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AzurePipelineSample.NETStandard.Core\AzurePipelineSample.NETStandard.Core.csproj" />
+    <ProjectReference Include="..\AzurePipelineSample.NETStandard.Core\AzurePipelineSample.NETStandard.Core.csproj"
+                      Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="AzurePipelineSample.NETStandard.Core"
+               Condition="'$(Configuration)'=='CI_Release'">
+      <HintPath>..\AzurePipelineSample.NETStandard.Core\bin\CI_Release\netstandard2.0\AzurePipelineSample.NETStandard.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

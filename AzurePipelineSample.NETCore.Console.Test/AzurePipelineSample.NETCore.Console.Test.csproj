@@ -1,9 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Configurations>Debug;Release;CI_Release</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CI_Release|AnyCPU'">
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AzurePipelineSample.NETCore.Console\AzurePipelineSample.NETCore.Console.csproj" />
+    <ProjectReference Include="..\AzurePipelineSample.NETCore.Console\AzurePipelineSample.NETCore.Console.csproj"
+                      Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="AzurePipelineSample.NETCore.Console"
+               Condition="'$(Configuration)'=='CI_Release'">
+      <HintPath>..\AzurePipelineSample.NETCore.Console\bin\CI_Release\netcoreapp2.1\AzurePipelineSample.NETCore.Console.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>
