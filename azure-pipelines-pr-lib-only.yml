@@ -48,12 +48,8 @@ stages:
       inputs:
         artifactName: 'libBinary'
         targetPath: '$(libBinaryDirectory)'
-    - task: DotNetCoreCLI@2
+    - script: 'dotnet publish AzurePipelineSample.NETStandard.Lib.Test/AzurePipelineSample.NETStandard.Lib.Test.csproj -c $(buildConfiguration)'
       displayName: 'build $(buildConfiguration)'
-      inputs:
-        command: 'publish'
-        projects: 'AzurePipelineSample.NETStandard.Lib.Test/*.csproj'
-        arguments: '-c $(buildConfiguration)'
     - task: PublishPipelineArtifact@0 # 生成したバイナリーをJob/Stage間で再利用する
       inputs:
         artifactName: 'libTestBinary'
