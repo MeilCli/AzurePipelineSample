@@ -2,7 +2,7 @@
 {
     public class Library : ILibrary
     {
-        // comment 7
+        // comment 8
         public string Version { get; } = "1.0";
     }
 }
