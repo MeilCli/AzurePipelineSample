@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA509878-0531-4E1A-B0C3-F434C8E93177}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines-pr-all.yml = azure-pipelines-pr-all.yml
+		azure-pipelines-pr-lib-and-core.yml = azure-pipelines-pr-lib-and-core.yml
 		azure-pipelines-pr-lib-only.yml = azure-pipelines-pr-lib-only.yml
 		azure-pipelines.yml = azure-pipelines.yml
 		LICENSE.txt = LICENSE.txt
