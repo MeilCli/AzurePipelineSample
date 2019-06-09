@@ -66,7 +66,8 @@ stages:
             eq(not(eq(variables['Build.Reason'], 'PullRequest')),'True'),
             eq(dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'],'True'), 
             eq(dependencies.Check_PR_Diff.outputs['diff.LibChanged'],'True'),
-            eq(dependencies.Check_PR_Diff.outputs['diff.CoreChanged'],'True')
+            eq(dependencies.Check_PR_Diff.outputs['diff.CoreChanged'],'True'),
+            eq(dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged'],'True')
           )
         )
   - template: .azure-pipelines/build-core-test.yml
