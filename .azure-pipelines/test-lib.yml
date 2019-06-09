@@ -7,10 +7,10 @@ jobs:
 - job: Test_Lib
   displayName: Lib
   dependsOn:
-    ${{ if parameters.dependsOn }}
+    - ${{ if parameters.dependsOn }}:
       - ${{ parameters.dependsOn }}
   condition:
-    ${{ if parameters.condition }}
+    - ${{ if parameters.condition }}:
       - ${{ parameters.condition }}
   pool:
     vmImage: 'ubuntu-latest'

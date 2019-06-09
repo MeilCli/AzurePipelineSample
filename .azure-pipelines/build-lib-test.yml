@@ -1,8 +1,18 @@
+parameters:
+  dependsOn: ''
+  condition: ''
+
 # must call template .azure-pipelines/build-lib.yml in before
 jobs:
 - job: Build_Lib_Test
   displayName: Lib Test
-  dependsOn: Build_Lib
+  dependsOn:
+    - Build_Lib
+    - ${{ if parameters.dependsOn }}:
+      - ${{ parameters.dependsOn }}
+  condition:
+    - ${{ if parameters.condition }}:
+      - ${{ parameters.condition }}
   pool:
     vmImage: 'ubuntu-latest'
   steps:
