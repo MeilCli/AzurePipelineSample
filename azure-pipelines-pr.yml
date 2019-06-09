@@ -46,14 +46,7 @@ stages:
       vmImage: 'windows-2019'
     steps:
     - powershell: |
-        $l1=$(pwd)
-        echo "location $l1"
-        cd $(System.DefaultWorkingDirectory)
-        $l2=$(pwd)
-        echo "location $l2"
-        $status=$(git status)
-        echo "status $status"
-        $files=$(git diff HEAD master --name-only)
+        $files=$(git diff HEAD origin/master --name-only)
         $temp=$files -split ' '
         $count=$temp.Length
         echo "Total changed $count files"
