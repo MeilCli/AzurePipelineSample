@@ -74,7 +74,7 @@ stages:
         }
       name: diff
     - script: |
-        echo $(PipelineChanged)
+        echo $(diff.PipelineChanged)
     - script: |
         echo AAA
   - job: Echo_PR_Diff
