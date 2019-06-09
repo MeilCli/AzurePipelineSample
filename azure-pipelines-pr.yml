@@ -72,13 +72,25 @@ stages:
           }
         }
       name: diff
+  - job: Echo_PR_Diff
+    displayName: PR Diff
+    variables:
+      libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
+      coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
+      consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
+      pipelineChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
+    steps:
+    - script: echo $(libChanged)
+    - script: echo $(coreChanged)
+    - script: echo $(consoleChanged)
+    - script: echo $(pipelineChanged)
 - stage: Echo
   dependsOn: Condition
   variables:
-    libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
-    coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
-    consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
-    pipelineChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
+    libChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.LibChanged']]
+    coreChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.CoreChanged']]
+    consoleChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.ConsoleChanged']]
+    pipelineChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.PipelineChanged']]
   jobs:
   - job: Echo_PR_Diff
     displayName: PR Diff
