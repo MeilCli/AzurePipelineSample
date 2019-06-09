@@ -41,12 +41,11 @@ stages:
 - stage: Condition
   jobs:
   - job: Check_PR_Diff
-    variables:
-      jobName: $[variables['Agent.JobName']]
     displayName: Check PR Diff
     pool:
       vmImage: 'windows-2019'
     steps:
+    - powershell: echo $(Agent.JobName)
     - powershell: |
         $files=$(git diff HEAD origin/master --name-only)
         $temp=$files -split ' '
@@ -83,12 +82,12 @@ stages:
     displayName: PR Diff
     dependsOn: Check_PR_Diff
     variables:
-      jobName: $[variables['Agent.JobName']]
       libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
       coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
       consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
       pipelineChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
     steps:
+    - powershell: echo $(Agent.JobName)
     - script: |
         echo $(libChanged)
     - script: |
@@ -102,7 +101,6 @@ stages:
 - stage: Echo
   dependsOn: Condition
   variables: # test access
-    jobName: $[variables['Agent.JobName']]
     libChanged: $[dependencies.Condition.outputs['Check_PR_Diff.diff.PipelineChanged']]
     coreChanged: $[dependencies.Condition_Check_PR_Diff.outputs['diff.PipelineChanged']]
     consoleChanged: $[dependencies['Condition.Check_PR_Diff']['outputs']['diff.PipelineChanged']]
@@ -111,6 +109,7 @@ stages:
   - job: Echo_PR_Diff
     displayName: PR Diff
     steps:
+    - powershell: echo $(Agent.JobName)
     - script: |
         echo $(libChanged)
     - script: |
