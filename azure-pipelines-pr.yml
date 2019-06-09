@@ -73,6 +73,8 @@ stages:
           Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
         }
       name: diff
+    - script: echo $(PipelineChanged)
+    - script: echo AAA
   - job: Echo_PR_Diff
     displayName: PR Diff
     variables:
@@ -85,6 +87,7 @@ stages:
     - script: echo $(coreChanged)
     - script: echo $(consoleChanged)
     - script: echo $(pipelineChanged)
+    - script: echo AAA
 - stage: Echo
   dependsOn: Condition
   variables:
