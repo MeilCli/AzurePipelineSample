@@ -10,7 +10,7 @@ jobs:
     - ${{ if parameters.dependsOn }}:
       - ${{ parameters.dependsOn }}
   condition: 
-    - ${{ if parameters.condition }}: 
+    ${{ if parameters.condition }}: 
       ${{ parameters.condition }}
   pool:
     vmImage: 'ubuntu-latest'
