@@ -97,7 +97,7 @@ stages:
     - script: |
         echo AAA
     - powershell: |
-        echo $dependencies['Check_PR_Diff']['outputs']['diff.PipelineChanged']
+        echo $dependencies
 - stage: Echo
   dependsOn: Condition
   variables: # test access
