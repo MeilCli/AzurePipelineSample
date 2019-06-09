@@ -41,6 +41,8 @@ stages:
 - stage: Condition
   jobs:
   - job: Check_PR_Diff
+    variables:
+      jobName: $[variables['Agent.JobName']]
     displayName: Check PR Diff
     pool:
       vmImage: 'windows-2019'
@@ -81,6 +83,7 @@ stages:
     displayName: PR Diff
     dependsOn: Check_PR_Diff
     variables:
+      jobName: $[variables['Agent.JobName']]
       libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
       coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
       consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
@@ -96,11 +99,10 @@ stages:
         echo $(pipelineChanged)
     - script: |
         echo AAA
-    - powershell: |
-        echo $dependencies
 - stage: Echo
   dependsOn: Condition
   variables: # test access
+    jobName: $[variables['Agent.JobName']]
     libChanged: $[dependencies.Condition.outputs['Check_PR_Diff.diff.PipelineChanged']]
     coreChanged: $[dependencies.Condition_Check_PR_Diff.outputs['diff.PipelineChanged']]
     consoleChanged: $[dependencies['Condition.Check_PR_Diff']['outputs']['diff.PipelineChanged']]
