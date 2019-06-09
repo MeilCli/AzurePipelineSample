@@ -1,0 +1,22 @@
+# must call template .azure-pipelines/build-core.yml in before
+jobs:
+- job: Build_Console
+  displayName: Console
+  dependsOn: Build_Core
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'coreBinary'
+      targetPath: '$(coreBinaryDirectory)'
+  - task: DotNetCoreCLI@2
+    displayName: 'build $(buildConfiguration)'
+    inputs:
+      command: 'build'
+      projects: '$(consoleProject)/*.csproj'
+      arguments: '-c $(buildConfiguration)'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'consoleBinary'
+      targetPath: '$(consoleBinaryDirectory)'

@@ -1,7 +1,22 @@
-trigger:
-- master
+trigger: 
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - azure-pipelines-pr-lib.yml
+    - .azure-pipelines/*
 
-pr: none
+pr:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - AzurePipelineSample.NETStandard.Core/*
+    - AzurePipelineSample.NETStandard.Core.Test/*
+    - azure-pipelines-pr-core.yml
+    - .azure-pipelines/*
 
 variables:
   buildConfiguration: 'CI_Release'
@@ -22,14 +37,10 @@ stages:
 - stage: Build
   jobs:
   - template: .azure-pipelines/build-lib.yml
-  - template: .azure-pipelines/build-lib-test.yml
 　- template: .azure-pipelines/build-core.yml
   - template: .azure-pipelines/build-core-test.yml
   - template: .azure-pipelines/build-console.yml
-  - template: .azure-pipelines/build-console-test.yml
 - stage: Test
   dependsOn: Build
   jobs:
-  - template: .azure-pipelines/test-lib.yml
   - template: .azure-pipelines/test-core.yml
-  - template: .azure-pipelines/test-console.yml

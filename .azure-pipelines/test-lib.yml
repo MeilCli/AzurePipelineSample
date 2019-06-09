@@ -1,0 +1,17 @@
+# must call template .azure-pipelines/build-lib-test.yml in before
+jobs:
+- job: Test_Lib
+  displayName: Lib
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'libTestBinary'
+      targetPath: '$(libTestBinaryDirectory)'
+  - script: 'dotnet vstest $(System.DefaultWorkingDirectory)/$(libTestBinaryDirectory)/publish/$(libTestProject).dll /logger:trx /ResultsDirectory:$(System.DefaultWorkingDirectory)/Results'
+    displayName: Run Test
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'

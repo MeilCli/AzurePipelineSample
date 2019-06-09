@@ -1,0 +1,17 @@
+# must call template .azure-pipelines/build-console-test.yml in before
+jobs:
+- job: Test_Console
+  displayName: Console
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'consoleTestBinary'
+      targetPath: '$(consoleTestBinaryDirectory)'
+  - script: 'dotnet vstest $(System.DefaultWorkingDirectory)/$(consoleTestBinaryDirectory)/publish/$(consoleTestProject).dll /logger:trx /ResultsDirectory:$(System.DefaultWorkingDirectory)/Results'
+    displayName: Run Test
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'

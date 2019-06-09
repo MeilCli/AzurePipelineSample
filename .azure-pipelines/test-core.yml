@@ -1,0 +1,17 @@
+# must call template .azure-pipelines/build-core-test.yml in before
+jobs:
+- job: Test_Core
+  displayName: Core
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'coreTestBinary'
+      targetPath: '$(coreTestBinaryDirectory)'
+  - script: 'dotnet vstest $(System.DefaultWorkingDirectory)/$(coreTestBinaryDirectory)/publish/$(coreTestProject).dll /logger:trx /ResultsDirectory:$(System.DefaultWorkingDirectory)/Results'
+    displayName: Run Test
+  - task: PublishTestResults@2
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: '**/*.trx'

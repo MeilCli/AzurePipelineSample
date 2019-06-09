@@ -1,0 +1,22 @@
+# must call template .azure-pipelines/build-core.yml in before
+jobs:
+- job: Build_Core_Test
+  displayName: Core Test
+  dependsOn: Build_Core
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'libBinary'
+      targetPath: '$(libBinaryDirectory)'
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'coreBinary'
+      targetPath: '$(coreBinaryDirectory)'
+  - script: 'dotnet publish $(coreTestProject)/$(coreTestProject).csproj -c $(buildConfiguration)'
+    displayName: 'build $(buildConfiguration)'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'coreTestBinary'
+      targetPath: '$(coreTestBinaryDirectory)'

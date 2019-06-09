@@ -1,0 +1,26 @@
+# must call template .azure-pipelines/build-console.yml in before
+jobs:
+- job: Build_Console_Test
+  displayName: Console Test
+  dependsOn: Build_Console
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'libBinary'
+      targetPath: '$(libBinaryDirectory)'
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'coreBinary'
+      targetPath: '$(coreBinaryDirectory)'
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'consoleBinary'
+      targetPath: '$(consoleBinaryDirectory)'
+  - script: 'dotnet publish $(consoleTestProject)/$(consoleTestProject).csproj -c $(buildConfiguration)'
+    displayName: 'build $(buildConfiguration)'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'consoleTestBinary'
+      targetPath: '$(consoleTestBinaryDirectory)'
