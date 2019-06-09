@@ -46,10 +46,10 @@ stages:
       vmImage: 'windows-2019'
     steps:
     - powershell: |
-        Get-Location
+        echo Get-Location
         cd $(System.DefaultWorkingDirectory)
-        Get-Location
-        git status
+        echo Get-Location
+        echo git status
         $files=$(git diff HEAD master --name-only)
         $temp=$files -split ' '
         $count=$temp.Length
