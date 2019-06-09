@@ -39,10 +39,10 @@ stages:
       condition: |
         or(
           not(eq(variables['Build.Reason'], 'PullRequest')),
-          dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'], 
-          dependencies.Check_PR_Diff.outputs['diff.LibChanged'],
-          dependencies.Check_PR_Diff.outputs['diff.CoreChanged'],
-          dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']
+          $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']], 
+          $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']],
+          $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']],
+          $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
         )
   - template: .azure-pipelines/build-lib-test.yml
     parameters:
