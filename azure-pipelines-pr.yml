@@ -101,7 +101,7 @@ stages:
   variables: # test access
     libChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
     coreChanged: $[dependencies.Condition_Check_PR_Diff.outputs['diff.PipelineChanged']]
-    consoleChanged: $[dependencies.['Condition.Check_PR_Diff']['outputs']['diff.PipelineChanged']]
+    consoleChanged: $[dependencies['Condition.Check_PR_Diff']['outputs']['diff.PipelineChanged']]
     pipelineChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.PipelineChanged']]
   jobs:
   - job: Echo_PR_Diff
