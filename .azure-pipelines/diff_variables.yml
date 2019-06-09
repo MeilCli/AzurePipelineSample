@@ -1,0 +1,40 @@
+  parameters:
+    jobName: 'Check_PR_Diff'
+    jobDisplayName: 'Check PR Diff'
+    pipelineFile: ''
+  
+  jobs:
+  - job: ${{ parameters.jobName }}
+    displayName: ${{ parameters.jobDisplayName }}
+    pool:
+      vmImage: 'windows-2019'
+    variable:
+      pipelineFile: ${{ parameters.pipelineFile }}
+    steps:
+    - powershell: |
+        $files=$(git diff HEAD origin/master --name-only)
+        $temp=$files -split ' '
+        $count=$temp.Length
+        echo "Total changed $count files"
+        For ($i=0; $i -lt $temp.Length; $i++)
+        {
+          $name=$temp[$i]
+          echo "this is $name file"
+          if (($name -like "$(libProject)/*") -or ($name -like "$(libTestProject)/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=LibChanged;isOutput=true]True"
+          }
+          if (($name -like "$(coreProject)/*") -or ($name -like "$(coreTestProject)/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=CoreChanged;isOutput=true]True"
+          }
+          if (($name -like "$(consoleProject)/*") -or ($name -like "$(consoleTestProject)/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=ConsoleChanged;isOutput=true]True"
+          }
+          if (($name -like "$(pipelineFile)") -or ($name -like ".azure-pipeline/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
+          }
+        }
+      name: diff
