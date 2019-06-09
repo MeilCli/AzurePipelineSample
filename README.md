@@ -30,38 +30,34 @@ multi project/module [Azure Pipelines](https://github.com/marketplace/azure-pipe
 Sample provides two pull-request pipeline type. Select pipeline type under:
 - Allow duplicate build on many pipelines when changing within multi projects
   - pipeline: PullRequest(Lib), yaml: `azure-pipelines-pr-lob.yml`
+    - Build Lib, Build Core, Test Lib
   - pipeline: PullRequest(Core), yaml: `azure-pipelines-pr-core.yml`
+    - Build Lib, Build Core, Build Console, Test Core
   - pipeline: PullRequest(Console), yaml: `azure-pipelines-pr-console.yml`
+    - Build Lib, Build Core, Build Console, Test Console
 - Distribute build on one pipeline when changing within multi projects
   - pipeline: PullRequest, yaml: `azure-pipelines-pr.yml`
 
 Example of changing files, will trigger build:
 
-|Changing|Pipeline|Build Lib|Build Core|Build Console|
+|Changing|Run PullRequest(Lib)|Run PullRequest(Core)|Run PullRequest(Console)|
 |:--|:--|:--:|:--:|:--:|
-|Lib files|PullRequest(Lib)|:heavy_check_mark:|||
-|Lib files|PullRequest(Core)||||
-|Lib files|PullRequest(Console)||||
-|Lib files|PullRequest|:heavy_check_mark:|||
-|Core files|PullRequest(Lib)||||
-|Core files|PullRequest(Core)||:heavy_check_mark:||
-|Core files|PullRequest(Console)||||
-|Core files|PullRequest||:heavy_check_mark:||
-|Console files|PullRequest(Lib)||||
-|Console files|PullRequest(Core)||||
-|Console files|PullRequest(Console)|||:heavy_check_mark:|
-|Console files|PullRequest|||:heavy_check_mark:|
-|Lib & Core files|PullRequest(Lib)|:heavy_check_mark:|:heavy_check_mark:||
-|Lib & Core files|PullRequest(Core)|:heavy_check_mark:|:heavy_check_mark:||
-|Lib & Core files|PullRequest(Console)||||
-|Lib & Core files|PullRequest|:heavy_check_mark:|:heavy_check_mark:||
-|Core & Console files|PullRequest(Lib)||||
-|Core & Console files|PullRequest(Core)||:heavy_check_mark:|:heavy_check_mark:|
-|Core & Console files|PullRequest(Console)||:heavy_check_mark:|:heavy_check_mark:|
-|Core & Console files|PullRequest||:heavy_check_mark:|:heavy_check_mark:|
-|Lib & Core & Console files|PullRequest(Lib)|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
-|Lib & Core & Console files|PullRequest(Core)|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
-|Lib & Core & Console files|PullRequest(Console)|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
-|Lib & Core & Console files|PullRequest|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|Lib files|:heavy_check_mark:|||
+|Core files||:heavy_check_mark:||
+|Console files|||:heavy_check_mark:|
+|Lib & Core files|:heavy_check_mark:|:heavy_check_mark:||
+|Core & Console files||:heavy_check_mark:|:heavy_check_mark:
+|Lib & Core & Console files|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 
 This dupplicate build is happened by path trigger priority between 'include' and 'exclude'.
+
+PullRequest pipeline will trigger build:
+
+|Changing|Build Lib|Build Core|Build Console|
+|:--|:--|:--:|:--:|:--:|
+|Lib files|:heavy_check_mark:|||
+|Core files||:heavy_check_mark:||
+|Console files|||:heavy_check_mark:|
+|Lib & Core files|:heavy_check_mark:|:heavy_check_mark:||
+|Core & Console files||:heavy_check_mark:|:heavy_check_mark:
+|Lib & Core & Console files|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
