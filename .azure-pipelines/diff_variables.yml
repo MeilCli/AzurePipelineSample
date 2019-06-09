@@ -8,7 +8,7 @@
     displayName: ${{ parameters.jobDisplayName }}
     pool:
       vmImage: 'windows-2019'
-    variable:
+    variables:
       pipelineFile: ${{ parameters.pipelineFile }}
     steps:
     - powershell: |
