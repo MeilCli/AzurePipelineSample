@@ -73,7 +73,7 @@ stages:
         }
       name: diff
 - stage: Echo
-  dependsOn: Check_PR_Diff
+  dependsOn: Condition
   variables:
     libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
     coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
