@@ -53,11 +53,11 @@ This dupplicate build is happened by path trigger priority between `include` and
 
 PullRequest pipeline will trigger build:
 
-|Changing|Build Lib|Build Core|Build Console|
-|:--|:--:|:--:|:--:|
-|Lib files|:heavy_check_mark:|||
-|Core files||:heavy_check_mark:||
-|Console files|||:heavy_check_mark:|
-|Lib & Core files|:heavy_check_mark:|:heavy_check_mark:||
-|Core & Console files||:heavy_check_mark:|:heavy_check_mark:
-|Lib & Core & Console files|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|Changing|Build Lib|Build Core|Build Console|Test Lib|Test core|Test Console|
+|:--|:--:|:--:|:--:|:--:|:--:|:--:|
+|Lib files|:heavy_check_mark:|||:heavy_check_mark:|||
+|Core files|:heavy_check_mark:|:heavy_check_mark:|||:heavy_check_mark:||
+|Console files|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|||:heavy_check_mark:|
+|Lib & Core files|:heavy_check_mark:|:heavy_check_mark:||:heavy_check_mark:|:heavy_check_mark:||
+|Core & Console files|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:||:heavy_check_mark:|:heavy_check_mark:|
+|Lib & Core & Console files|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
