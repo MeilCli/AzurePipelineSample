@@ -1,0 +1,89 @@
+trigger: 
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - azure-pipelines-pr.yml
+    - .azure-pipelines/*
+
+pr:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - AzurePipelineSample.NETStandard.Lib/*
+    - AzurePipelineSample.NETStandard.Lib.Test/*
+    - AzurePipelineSample.NETCore.Console/*
+    - AzurePipelineSample.NETCore.Console.Test/*
+    - AzurePipelineSample.NETStandard.Core/*
+    - AzurePipelineSample.NETStandard.Core.Test/*
+    - azure-pipelines-pr.yml
+    - .azure-pipelines/*
+
+variables:
+  buildConfiguration: 'CI_Release'
+  libProject: 'AzurePipelineSample.NETStandard.Lib'
+  libBinaryDirectory: '$(libProject)/bin/$(buildConfiguration)/netstandard2.0'
+  libTestProject: 'AzurePipelineSample.NETStandard.Lib.Test'
+  libTestBinaryDirectory: '$(libTestProject)/bin/$(buildConfiguration)/netcoreapp2.1'
+  coreProject: 'AzurePipelineSample.NETStandard.Core'
+  coreBinaryDirectory: '$(coreProject)/bin/$(buildConfiguration)/netstandard2.0'
+  coreTestProject: 'AzurePipelineSample.NETStandard.Core.Test'
+  coreTestBinaryDirectory: '$(coreTestProject)/bin/$(buildConfiguration)/netcoreapp2.1'
+  consoleProject: 'AzurePipelineSample.NETCore.Console'
+  consoleBinaryDirectory: '$(consoleProject)/bin/$(buildConfiguration)/netcoreapp2.1'
+  consoleTestProject: 'AzurePipelineSample.NETCore.Console.Test'
+  consoleTestBinaryDirectory: '$(consoleTestProject)/bin/$(buildConfiguration)/netcoreapp2.1'
+
+stages:
+- stage: Condition
+  jobs:
+  - job: Check_PR_Diff
+    displayName: Check PR Diff
+    pool:
+      vmImage: 'windows-2019'
+    steps:
+    - powershell: |
+        $files=$(git diff HEAD master --name-only)
+        $temp=$files -split ' '
+        $count=$temp.Length
+        echo "Total changed $count files"
+        For ($i=0; $i -lt $temp.Length; $i++)
+        {
+          $name=$temp[$i]
+          echo "this is $name file"
+          if (($name -like "$(libProject)/*") -or ($name -like "$(libTestProject)/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=LibChanged;isOutput=true]True"
+          }
+          if (($name -like "$(coreProject)/*") -or ($name -like "$(coreTestProject)/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=CoreChanged;isOutput=true]True"
+          }
+          if (($name -like "$(consoleProject)/*") -or ($name -like "$(consoleTestProject)/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=ConsoleChanged;isOutput=true]True"
+          }
+          if (($name -like "azure-pipeline-pr.yml") -or ($name -like ".azure-pipeline/*"))
+          {
+            Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
+          }
+        }
+      name: diff
+- stage: Echo
+  dependsOn: Check_PR_Diff
+  valiables:
+    libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
+    coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
+    consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
+    pipelineChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
+  jobs:
+  - job: Echo_PR_Diff
+    displayName: PR Diff
+    steps:
+    - script: echo $(libChanged)
+    - script: echo $(coreChanged)
+    - script: echo $(consoleChanged)
+    - script: echo $(pipelineChanged)
