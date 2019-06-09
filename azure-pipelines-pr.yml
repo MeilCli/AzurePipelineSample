@@ -98,6 +98,7 @@ stages:
         echo AAA
 - stage: Echo
   dependsOn: Condition
+  condition: succeeded('Condition.Echo_PR_Diff')
   variables: # test access
     libChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
     coreChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.CoreChanged']]
