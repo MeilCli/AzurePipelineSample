@@ -49,7 +49,7 @@ Example of changing files, will trigger build:
 |Core & Console files||:heavy_check_mark:|:heavy_check_mark:
 |Lib & Core & Console files|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 
-This dupplicate build is happened by path trigger priority between 'include' and 'exclude'.
+This dupplicate build is happened by path trigger priority between `include` and `exclude`.
 
 PullRequest pipeline will trigger build:
 
