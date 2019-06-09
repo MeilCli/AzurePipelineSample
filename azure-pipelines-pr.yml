@@ -70,6 +70,7 @@ stages:
           {
             Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
           }
+          Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
         }
       name: diff
   - job: Echo_PR_Diff
