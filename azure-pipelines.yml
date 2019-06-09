@@ -1,5 +1,5 @@
 trigger:
-  branched:
+  branches:
     include:
     - master
   tags:
