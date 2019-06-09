@@ -56,7 +56,6 @@ stages:
           )
         )
 
-stages:
 - stage: Test
   dependsOn: Build
   jobs:
