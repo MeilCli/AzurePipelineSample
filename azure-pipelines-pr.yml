@@ -70,13 +70,13 @@ stages:
           {
             Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
           }
-          Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
         }
+        Write-Host "##vso[task.setvariable variable=PipelineChanged;isOutput=true]True"
       name: diff
     - script: |
         echo $(diff.PipelineChanged)
     - script: |
-        echo AAA
+        echo AAAB
   - job: Echo_PR_Diff
     displayName: PR Diff
     variables:
