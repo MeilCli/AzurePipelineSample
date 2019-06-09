@@ -42,7 +42,7 @@ stages:
   - template: .azure-pipelines/build-lib.yml
     parameters:
       dependsOn: 'Check_PR_Diff'
-      condition: $[or(buildOnPR, pipelineChanged, libChanged, coreChanged, consoleChanged)]
+      condition: $[or(variables.buildOnPR, variables.pipelineChanged, variables.libChanged, variables.coreChanged, variables.consoleChanged)]
   - template: .azure-pipelines/build-lib-test.yml
     parameters:
       condition: |
