@@ -96,7 +96,7 @@ stages:
         echo $(pipelineChanged)
     - script: |
         echo AAA
-    - script: |
+    - powershell: |
         echo $dependencies | ConvertTo-Json
 - stage: Echo
   dependsOn: Condition
@@ -117,5 +117,5 @@ stages:
         echo $(consoleChanged)
     - script: |
         echo $(pipelineChanged)
-    - script: |
+    - powershell: |
         echo $dependencies | ConvertTo-Json
