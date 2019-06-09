@@ -97,7 +97,8 @@ stages:
     - script: |
         echo AAA
     - powershell: |
-        echo $dependencies | ConvertTo-Json
+        echo DUMP
+        echo ($dependencies | ConvertTo-Json)
 - stage: Echo
   dependsOn: Condition
   variables: # test access
@@ -118,4 +119,5 @@ stages:
     - script: |
         echo $(pipelineChanged)
     - powershell: |
-        echo $dependencies | ConvertTo-Json
+        echo DUMP
+        echo ($dependencies | ConvertTo-Json)
