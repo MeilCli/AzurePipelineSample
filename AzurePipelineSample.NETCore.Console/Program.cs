@@ -5,7 +5,7 @@ namespace AzurePipelineSample.NETCore.Console
 {
     public class Program
     {
-        // comment 3
+        // comment 4
         public static void Main(string[] args)
         {
             WriteLine("Hello World!");
