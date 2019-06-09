@@ -27,38 +27,8 @@ variables:
 stages:
 - stage: Build
   jobs:
-  - job: Build_Lib
-    displayName: Lib
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: DotNetCoreCLI@2
-      displayName: 'build $(buildConfiguration)'
-      inputs:
-        command: 'build'
-        projects: '$(libProject)/*.csproj'
-        arguments: '-c $(buildConfiguration)'
-    - task: PublishPipelineArtifact@0
-      inputs:
-        artifactName: 'libBinary'
-        targetPath: '$(libBinaryDirectory)'
-
-  - job: Build_Lib_Test
-    displayName: Lib Test
-    dependsOn: Build_Lib
-    pool:
-      vmImage: 'ubuntu-latest'
-    steps:
-    - task: DownloadPipelineArtifact@0
-      inputs:
-        artifactName: 'libBinary'
-        targetPath: '$(libBinaryDirectory)'
-    - script: 'dotnet publish $(libTestProject)/$(libTestProject).csproj -c $(buildConfiguration)'
-      displayName: 'build $(buildConfiguration)'
-    - task: PublishPipelineArtifact@0
-      inputs:
-        artifactName: 'libTestBinary'
-        targetPath: '$(libTestBinaryDirectory)'
+  - template: .azure-pipelines/build-lib.yml
+  - template: .azure-pipelines/build-lib-test.yml
 
   - job: Build_Core
     displayName: Core

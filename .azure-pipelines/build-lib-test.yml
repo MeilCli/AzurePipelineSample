@@ -1,0 +1,16 @@
+- job: Build_Lib_Test
+  displayName: Lib Test
+  dependsOn: Build_Lib
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'libBinary'
+      targetPath: '$(libBinaryDirectory)'
+  - script: 'dotnet publish $(libTestProject)/$(libTestProject).csproj -c $(buildConfiguration)'
+    displayName: 'build $(buildConfiguration)'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'libTestBinary'
+      targetPath: '$(libTestBinaryDirectory)'

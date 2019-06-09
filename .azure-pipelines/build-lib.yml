@@ -1,0 +1,16 @@
+jobs:
+- job: Build_Lib
+  displayName: Lib
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'build $(buildConfiguration)'
+    inputs:
+      command: 'build'
+      projects: '$(libProject)/*.csproj'
+      arguments: '-c $(buildConfiguration)'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'libBinary'
+      targetPath: '$(libBinaryDirectory)'
