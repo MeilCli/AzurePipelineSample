@@ -79,6 +79,7 @@ stages:
         echo AAAB
   - job: Echo_PR_Diff
     displayName: PR Diff
+    dependsOn: Check_PR_Diff
     variables:
       libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
       coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
