@@ -96,13 +96,11 @@ stages:
         echo $(pipelineChanged)
     - script: |
         echo AAA
-    - bash: |
-        printenv | sort
 - stage: Echo
   dependsOn: Condition
   variables: # test access
     libChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
-    coreChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.CoreChanged']]
+    coreChanged: $[dependencies.Condition_Check_PR_Diff.outputs['diff.PipelineChanged']]
     consoleChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.ConsoleChanged']]
     pipelineChanged: $[dependencies.Condition.Check_PR_Diff.outputs['diff.PipelineChanged']]
   jobs:
@@ -117,5 +115,3 @@ stages:
         echo $(consoleChanged)
     - script: |
         echo $(pipelineChanged)
-    - bash: |
-        printenv | sort
