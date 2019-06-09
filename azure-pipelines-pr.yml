@@ -96,9 +96,8 @@ stages:
         echo $(pipelineChanged)
     - script: |
         echo AAA
-    - powershell: |
-        echo DUMP
-        echo ($dependencies | ConvertTo-Json)
+    - bash: |
+        printenv | sort
 - stage: Echo
   dependsOn: Condition
   variables: # test access
@@ -118,6 +117,5 @@ stages:
         echo $(consoleChanged)
     - script: |
         echo $(pipelineChanged)
-    - powershell: |
-        echo DUMP
-        echo ($dependencies | ConvertTo-Json)
+    - bash: |
+        printenv | sort
