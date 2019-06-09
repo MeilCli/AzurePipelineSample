@@ -41,7 +41,7 @@ Sample provides two pull-request pipeline type. Select pipeline type under:
 Example of changing files, will trigger build:
 
 |Changing|Run PullRequest(Lib)|Run PullRequest(Core)|Run PullRequest(Console)|
-|:--|:--|:--:|:--:|:--:|
+|:--|:--:|:--:|:--:|
 |Lib files|:heavy_check_mark:|||
 |Core files||:heavy_check_mark:||
 |Console files|||:heavy_check_mark:|
@@ -54,7 +54,7 @@ This dupplicate build is happened by path trigger priority between 'include' and
 PullRequest pipeline will trigger build:
 
 |Changing|Build Lib|Build Core|Build Console|
-|:--|:--|:--:|:--:|:--:|
+|:--|:--:|:--:|:--:|
 |Lib files|:heavy_check_mark:|||
 |Core files||:heavy_check_mark:||
 |Console files|||:heavy_check_mark:|
