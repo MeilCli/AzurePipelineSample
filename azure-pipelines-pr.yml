@@ -81,7 +81,7 @@ stages:
     displayName: PR Diff
     dependsOn: Check_PR_Diff
     variables:
-      testDip: $[dependencies]
+      testDip: $(dependencies)
       libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
       coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
       consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
