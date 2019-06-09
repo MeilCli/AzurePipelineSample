@@ -1,6 +1,6 @@
 parameters:
   dependsOn: ''
-  condition: ''
+  condition: 'succeeded()'
 
 # must call template .azure-pipelines/build-lib-test.yml in before
 jobs:
@@ -9,9 +9,7 @@ jobs:
   dependsOn:
     - ${{ if parameters.dependsOn }}:
       - ${{ parameters.dependsOn }}
-  condition: 
-    ${{ if parameters.condition }}: 
-      ${{ parameters.condition }}
+  condition: ${{ parameters.condition }}
   pool:
     vmImage: 'ubuntu-latest'
   steps:

@@ -1,6 +1,6 @@
 parameters:
   dependsOn: ''
-  condition: ''
+  condition: 'succeeded()'
 
 jobs:
 - job: Build_Lib
@@ -8,9 +8,7 @@ jobs:
   dependsOn:
     - ${{ if parameters.dependsOn }}:
       - ${{ parameters.dependsOn }}
-  condition: 
-    ${{ if parameters.condition }}: 
-      ${{ parameters.condition }}
+  condition: ${{ parameters.condition }}
   pool:
     vmImage: 'ubuntu-latest'
   steps:
