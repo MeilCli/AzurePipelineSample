@@ -1,8 +1,16 @@
+parameters:
+  dependsOn: ''
+  condition: 'succeeded()'
+
 # must call template .azure-pipelines/build-console.yml in before
 jobs:
 - job: Build_Console_Test
   displayName: Console Test
-  dependsOn: Build_Console
+  dependsOn:
+    - Build_Console
+    - ${{ if parameters.dependsOn }}:
+      - ${{ parameters.dependsOn }}
+  condition: ${{ parameters.condition }}
   pool:
     vmImage: 'ubuntu-latest'
   steps:

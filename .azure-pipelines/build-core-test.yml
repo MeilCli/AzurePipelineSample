@@ -1,8 +1,16 @@
+parameters:
+  dependsOn: ''
+  condition: 'succeeded()'
+
 # must call template .azure-pipelines/build-core.yml in before
 jobs:
 - job: Build_Core_Test
   displayName: Core Test
-  dependsOn: Build_Core
+  dependsOn:
+    - Build_Core
+    - ${{ if parameters.dependsOn }}:
+      - ${{ parameters.dependsOn }}
+  condition: ${{ parameters.condition }}
   pool:
     vmImage: 'ubuntu-latest'
   steps:

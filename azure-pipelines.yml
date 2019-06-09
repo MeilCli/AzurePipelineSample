@@ -4,19 +4,7 @@ trigger:
 pr: none
 
 variables:
-  buildConfiguration: 'CI_Release'
-  libProject: 'AzurePipelineSample.NETStandard.Lib'
-  libBinaryDirectory: '$(libProject)/bin/$(buildConfiguration)/netstandard2.0'
-  libTestProject: 'AzurePipelineSample.NETStandard.Lib.Test'
-  libTestBinaryDirectory: '$(libTestProject)/bin/$(buildConfiguration)/netcoreapp2.1'
-  coreProject: 'AzurePipelineSample.NETStandard.Core'
-  coreBinaryDirectory: '$(coreProject)/bin/$(buildConfiguration)/netstandard2.0'
-  coreTestProject: 'AzurePipelineSample.NETStandard.Core.Test'
-  coreTestBinaryDirectory: '$(coreTestProject)/bin/$(buildConfiguration)/netcoreapp2.1'
-  consoleProject: 'AzurePipelineSample.NETCore.Console'
-  consoleBinaryDirectory: '$(consoleProject)/bin/$(buildConfiguration)/netcoreapp2.1'
-  consoleTestProject: 'AzurePipelineSample.NETCore.Console.Test'
-  consoleTestBinaryDirectory: '$(consoleTestProject)/bin/$(buildConfiguration)/netcoreapp2.1'
+  - template: .azure-pipelines/variables.yml
 
 stages:
 - stage: Build

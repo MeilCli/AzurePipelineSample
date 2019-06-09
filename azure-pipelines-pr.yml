@@ -52,7 +52,54 @@ stages:
           or(
             not(eq(variables['Build.Reason'], 'PullRequest')),
             dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'], 
+            dependencies.Check_PR_Diff.outputs['diff.LibChanged']
+          )
+        )
+  - template: .azure-pipelines/build-core.yml
+    parameters:
+      condition: |
+        and(
+          succeeded('Build_Lib'),
+          or(
+            not(eq(variables['Build.Reason'], 'PullRequest')),
+            dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'], 
             dependencies.Check_PR_Diff.outputs['diff.LibChanged'],
+            dependencies.Check_PR_Diff.outputs['diff.CoreChanged']
+          )
+        )
+  - template: .azure-pipelines/build-core-test.yml
+    parameters:
+      condition: |
+        and(
+          succeeded('Build_Core'),
+          or(
+            not(eq(variables['Build.Reason'], 'PullRequest')),
+            dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'],
+            dependencies.Check_PR_Diff.outputs['diff.CoreChanged']
+          )
+        )
+  - template: .azure-pipelines/build-console.yml
+    parameters:
+      condition: |
+        and(
+          succeeded('Build_Core'),
+          or(
+            not(eq(variables['Build.Reason'], 'PullRequest')),
+            dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'], 
+            dependencies.Check_PR_Diff.outputs['diff.LibChanged'],
+            dependencies.Check_PR_Diff.outputs['diff.CoreChanged'],
+            dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']
+          )
+        )
+  - template: .azure-pipelines/build-console-test.yml
+    parameters:
+      condition: |
+        and(
+          succeeded('Build_Console'),
+          or(
+            not(eq(variables['Build.Reason'], 'PullRequest')),
+            dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'],
+            dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']
           )
         )
 
@@ -72,4 +119,22 @@ stages:
           not(eq(variables['Build.Reason'], 'PullRequest')),
           dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'], 
           dependencies.Check_PR_Diff.outputs['diff.LibChanged']
+        )
+  - template: .azure-pipelines/test-core.yml
+    parameters:
+      dependsOn: 'Check_PR_Diff'
+      condition: |
+        or(
+          not(eq(variables['Build.Reason'], 'PullRequest')),
+          dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'], 
+          dependencies.Check_PR_Diff.outputs['diff.CoreChanged']
+        )
+  - template: .azure-pipelines/test-console.yml
+    parameters:
+      dependsOn: 'Check_PR_Diff'
+      condition: |
+        or(
+          not(eq(variables['Build.Reason'], 'PullRequest')),
+          dependencies.Check_PR_Diff.outputs['diff.PipelineChanged'], 
+          dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']
         )
