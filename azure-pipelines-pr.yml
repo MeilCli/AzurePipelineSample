@@ -23,15 +23,16 @@ pr:
     - .azure-pipelines/*
 
 variables:
-  - template: .azure-pipelines/variables.yml
-  - buildOnPR: $[not(eq(variables['Build.Reason'], 'PullRequest'))]
-  - pipelineChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
-  - libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
-  - coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
-  - consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
+- template: .azure-pipelines/variables.yml
 
 stages:
 - stage: Build
+  variables:
+    - buildOnPR: $[not(eq(variables['Build.Reason'], 'PullRequest'))]
+    - pipelineChanged: $[dependencies.Check_PR_Diff.outputs['diff.PipelineChanged']]
+    - libChanged: $[dependencies.Check_PR_Diff.outputs['diff.LibChanged']]
+    - coreChanged: $[dependencies.Check_PR_Diff.outputs['diff.CoreChanged']]
+    - consoleChanged: $[dependencies.Check_PR_Diff.outputs['diff.ConsoleChanged']]
   jobs:
   - template: .azure-pipelines/diff_variables.yml
     parameters:
