@@ -46,7 +46,7 @@ stages:
         )
   - template: .azure-pipelines/build-lib-test.yml
     parameters:
-      condtion: |
+      condition: |
         and(
           succeeded('Build_Lib'),
           or(
