@@ -37,7 +37,7 @@ stages:
 - stage: Build
   jobs:
   - template: .azure-pipelines/build-lib.yml
-　- template: .azure-pipelines/build-core.yml
+  - template: .azure-pipelines/build-core.yml
   - template: .azure-pipelines/build-core-test.yml
   - template: .azure-pipelines/build-console.yml
 - stage: Test
