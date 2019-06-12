@@ -10,7 +10,7 @@ stages:
         - script: echo $(value.testKey)
     - job: Job2
       dependsOn: Job1
-      valiables:
+      variables:
         testKey: $[dependencies.Job1.outputs['value.testKey']]
       steps:
         - script: echo $(testKey)
@@ -19,7 +19,7 @@ stages:
     jobs:
     - job: Job3
       dependsOn: Job1
-      valiables:
+      variables:
         testKey: $[dependencies.Job1.outputs['value.testKey']]
       steps:
         - script: echo $(testKey)
