@@ -1,4 +1,5 @@
-trigger: master
+trigger: 
+- master
 
 stages:
   - stage: Stage1
